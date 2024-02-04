@@ -90,3 +90,25 @@ ca.crt:     1123 bytes
 namespace:  11 bytes
 ```
 - Сгенерировать сертификат для подключения к внешнему ip-адресу. vagrant@vagrant:~/kub$ microk8s config. Ключи скопировала
+```
+vagrant@vagrant:~/kube$ microk8s config > ~/.kube/config
+vagrant@vagrant:~/kube$ kubectl get nodes
+NAME      STATUS   ROLES    AGE     VERSION
+vagrant   Ready    <none>   3h35m   v1.28.3
+```
+- Проверила службу дашборда Kubernetes:
+```
+vagrant@vagrant:~/kube$ microk8s kubectl get svc/kubernetes-dashboard -n kube-system
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+kubernetes-dashboard   ClusterIP   10.152.183.110   <none>        443/TCP   4h3m
+vagrant@vagrant:~/kube$ microk8s kubectl get pods -n kube-system
+NAME                                         READY   STATUS    RESTARTS   AGE
+dashboard-metrics-scraper-5657497c4c-6748c   1/1     Running   0          4h6m
+kubernetes-dashboard-54b48fbf9-b4wq6         1/1     Running   0          4h6m
+calico-node-vjcwj                            1/1     Running   0          4h17m
+coredns-864597b5fd-5flhg                     1/1     Running   0          4h17m
+calico-kube-controllers-77bd7c5b-kfndp       1/1     Running   0          4h17m
+metrics-server-848968bdcd-7n9jf              1/1     Running   0          4h7m
+```
+- проброс порта для подключения локально - я сделала в vagrantfile ---  config.vm.network "forwarded_port", guest: 10443, host: 10443
+- скопировала config на локальный пк, не могу разобраться с IP(моя виртуальная машина поднята через vagrant ubuntu 20.04 [config]()

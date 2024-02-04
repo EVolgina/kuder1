@@ -112,3 +112,37 @@ metrics-server-848968bdcd-7n9jf              1/1     Running   0          4h7m
 ```
 - проброс порта для подключения локально - я сделала в vagrantfile ---  config.vm.network "forwarded_port", guest: 10443, host: 10443
 - скопировала config на локальный пк, не могу разобраться с IP(моя виртуальная машина поднята через vagrant ubuntu 20.04 [config](https://github.com/EVolgina/kuder1/blob/main/config.docx)
+- откоректировала файл [csr.conf.template](https://github.com/EVolgina/kuder1/blob/main/csr.conf.template.docx)
+```
+vagrant@vagrant:~/kube$ sudo microk8s refresh-certs --cert front-proxy-client.crt ---обновила сертификаты
+Taking a backup of the current certificates under /var/snap/microk8s/6089/certs-backup/
+Creating new certificates
+Signature ok
+subject=CN = front-proxy-client
+Getting CA Private Key
+Restarting service kubelite.
+
+vagrant@vagrant:~/kube$ microk8s kubectl cluster-info
+Kubernetes control plane is running at https://127.0.0.1:16443
+CoreDNS is running at https://127.0.0.1:16443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+vagrant@vagrant:~/kube$ microk8s kubectl get nodes
+NAME      STATUS   ROLES    AGE     VERSION
+vagrant   Ready    <none>   4h57m   v1.28.3
+vagrant@vagrant:~/kube$ microk8s kubectl get pods --all-namespaces
+NAMESPACE     NAME                                         READY   STATUS    RESTARTS      AGE
+kube-system   kubernetes-dashboard-54b48fbf9-b4wq6         1/1     Running   1 (14m ago)   4h55m
+kube-system   dashboard-metrics-scraper-5657497c4c-6748c   1/1     Running   1 (14m ago)   4h54m
+kube-system   coredns-864597b5fd-5flhg                     1/1     Running   1 (14m ago)   5h5m
+kube-system   calico-kube-controllers-77bd7c5b-kfndp       1/1     Running   1 (14m ago)   5h5m
+kube-system   calico-node-vjcwj                            1/1     Running   2 (12m ago)   5h5m
+kube-system   metrics-server-848968bdcd-7n9jf              1/1     Running   1 (14m ago)   4h55m
+vagrant@vagrant:~/kube$ microk8s kubectl get services --all-namespaces
+NAMESPACE     NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                  AGE
+default       kubernetes                  ClusterIP   10.152.183.1     <none>        443/TCP                  5h6m
+kube-system   kube-dns                    ClusterIP   10.152.183.10    <none>        53/UDP,53/TCP,9153/TCP   5h5m
+kube-system   metrics-server              ClusterIP   10.152.183.59    <none>        443/TCP                  4h55m
+kube-system   kubernetes-dashboard        ClusterIP   10.152.183.110   <none>        443/TCP                  4h55m
+kube-system   dashboard-metrics-scraper   ClusterIP   10.152.183.252   <none>        8000/TCP                 4h55m
+```

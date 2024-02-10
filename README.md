@@ -111,7 +111,7 @@ calico-kube-controllers-77bd7c5b-kfndp       1/1     Running   0          4h17m
 metrics-server-848968bdcd-7n9jf              1/1     Running   0          4h7m
 ```
 - проброс порта для подключения локально - я сделала в vagrantfile ---  config.vm.network "forwarded_port", guest: 10443, host: 10443
-- скопировала config на локальный пк, не могу разобраться с IP(моя виртуальная машина поднята через vagrant ubuntu 20.04 [config](https://github.com/EVolgina/kuder1/blob/main/config.docx)
+- скопировала config на локальный пк, не могу разобраться с IP(моя виртуальная машина поднята через vagrant ubuntu 20.04 [config](https://github.com/EVolgina/kuder1/blob/main/config)
 - откоректировала файл [csr.conf.template](https://github.com/EVolgina/kuder1/blob/main/csr.conf.template.docx)
 ```
 vagrant@vagrant:~/kube$ sudo microk8s refresh-certs --cert front-proxy-client.crt ---обновила сертификаты

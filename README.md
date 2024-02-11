@@ -1,6 +1,8 @@
 # Задание 1. Установка MicroK8S
 - Установить MicroK8S на локальную машину или на удалённую виртуальную машину.
 ```
+vagrant@vagrant:~/kube$ sudo snap install kubeadm --classic
+kubeadm 1.28.6 from Canonical✓ installed
 vagrant@vagrant:~/kub$ sudo chown -f -R vagrant ~/.kub
 vagrant@vagrant:~/kub$ newgrp microk8s
 vagrant@vagrant:~/kub$ microk8s status --wait-ready
@@ -156,4 +158,8 @@ kube-system   kube-dns                    ClusterIP   10.152.183.10    <none>   
 kube-system   metrics-server              ClusterIP   10.152.183.59    <none>        443/TCP                  4h55m
 kube-system   kubernetes-dashboard        ClusterIP   10.152.183.110   <none>        443/TCP                  4h55m
 kube-system   dashboard-metrics-scraper   ClusterIP   10.152.183.252   <none>        8000/TCP                 4h55m
+```
+```
+vagrant@vagrant:~/kube$ kubeadm token create --print-join-command - создала токен присоединения к кластеру
+kubeadm join 10.0.2.15:16443 --token 5krwii.7eih1qb71hjwrrql --discovery-token-ca-cert-hash sha256:ef8b2cc9f70cb67c84dc6e33d520511992679dd1e4b6cb99700fdd52cd4ef5f0
 ```

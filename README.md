@@ -137,9 +137,9 @@ token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IkZxQi1faGlCeVBrUXQ0dWVScG1VczVCNEc4N3FH
 - Сгенерировать сертификат для подключения к внешнему ip-адресу. vagrant@vagrant:~/kub$ microk8s config. Ключи скопировала
 ```
 vagrant@vagrant:~/kube$ microk8s config > ~/.kube/config
-vagrant@vagrant:~/kube$ kubectl get nodes
-NAME      STATUS   ROLES    AGE     VERSION
-vagrant   Ready    <none>   3h35m   v1.28.3
+devops@WORKBOOK:/mnt/c/kube$ kubectl get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+workbook   Ready    <none>   22h   v1.28.6
 ```
 - Проверила службу дашборда Kubernetes:
 ```
@@ -191,6 +191,15 @@ kube-system   kubernetes-dashboard        ClusterIP   10.152.183.110   <none>   
 kube-system   dashboard-metrics-scraper   ClusterIP   10.152.183.252   <none>        8000/TCP                 4h55m
 ```
 ```
-vagrant@vagrant:~/kube$ kubeadm token create --print-join-command - создала токен присоединения к кластеру
-kubeadm join 10.0.2.15:16443 --token 5krwii.7eih1qb71hjwrrql --discovery-token-ca-cert-hash sha256:ef8b2cc9f70cb67c84dc6e33d520511992679dd1e4b6cb99700fdd52cd4ef5f0
+на 2 пк
+sudo apt install -y socat conntrack
+sudo snap install kubelet --classic
+kubelet 1.28.6 from Canonical✓ installed
+sudo systemctl enable kubelet.service
+sudo apt install -y containerd
+/proc/sys/net/bridge/bridge-nf-call-iptables установлен в 1 и /proc/sys/net/ipv4/ip_forward также установлен в 1.
+
+создала токен присоединения к кластеру
+devops@WORKBOOK:/mnt/c/kube$ kubeadm token create --print-join-command
+kubeadm join 172.23.49.32:16443 --token 7rleec.mlyhro6geuee4a59 --discovery-token-ca-cert-hash sha256:a2c99cdb751a1127ec311f054c6f7d69a1abd5c703819302874d8868848c5352
 ```

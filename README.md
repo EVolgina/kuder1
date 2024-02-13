@@ -36,6 +36,38 @@ addons:
     registry             # (core) Private image registry exposed on localhost:32000
     rook-ceph            # (core) Distributed Ceph storage using Rook
     storage              # (core) Alias to hostpath-storage add-on, deprecated
+vagrant@vagrant:~/kube$ sudo microk8s kubectl get all --all-namespaces
+NAMESPACE     NAME                                             READY   STATUS    RESTARTS        AGE
+kube-system   pod/coredns-864597b5fd-5flhg                     1/1     Running   10 (176m ago)   7d7h
+kube-system   pod/calico-kube-controllers-77bd7c5b-kfndp       1/1     Running   10 (176m ago)   7d7h
+kube-system   pod/dashboard-metrics-scraper-5657497c4c-6748c   1/1     Running   10 (176m ago)   7d7h
+kube-system   pod/kubernetes-dashboard-54b48fbf9-b4wq6         1/1     Running   14 (176m ago)   7d7h
+kube-system   pod/calico-node-vjcwj                            1/1     Running   16 (176m ago)   7d7h
+kube-system   pod/metrics-server-848968bdcd-7n9jf              1/1     Running   16 (176m ago)   7d7h
+
+NAMESPACE     NAME                                TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                  AGE
+default       service/kubernetes                  ClusterIP   10.152.183.1     <none>        443/TCP                  7d7h
+kube-system   service/kube-dns                    ClusterIP   10.152.183.10    <none>        53/UDP,53/TCP,9153/TCP   7d7h
+kube-system   service/metrics-server              ClusterIP   10.152.183.59    <none>        443/TCP                  7d7h
+kube-system   service/kubernetes-dashboard        ClusterIP   10.152.183.110   <none>        443/TCP                  7d7h
+kube-system   service/dashboard-metrics-scraper   ClusterIP   10.152.183.252   <none>        8000/TCP                 7d7h
+
+NAMESPACE     NAME                         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+kube-system   daemonset.apps/calico-node   1         1         1       1            1           kubernetes.io/os=linux   7d7h
+
+NAMESPACE     NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+kube-system   deployment.apps/coredns                     1/1     1            1           7d7h
+kube-system   deployment.apps/kubernetes-dashboard        1/1     1            1           7d7h
+kube-system   deployment.apps/dashboard-metrics-scraper   1/1     1            1           7d7h
+kube-system   deployment.apps/calico-kube-controllers     1/1     1            1           7d7h
+kube-system   deployment.apps/metrics-server              1/1     1            1           7d7h
+
+NAMESPACE     NAME                                                   DESIRED   CURRENT   READY   AGE
+kube-system   replicaset.apps/coredns-864597b5fd                     1         1         1       7d7h
+kube-system   replicaset.apps/kubernetes-dashboard-54b48fbf9         1         1         1       7d7h
+kube-system   replicaset.apps/dashboard-metrics-scraper-5657497c4c   1         1         1       7d7h
+kube-system   replicaset.apps/calico-kube-controllers-77bd7c5b       1         1         1       7d7h
+kube-system   replicaset.apps/metrics-server-848968bdcd              1         1         1       7d7h
 ```
 - Установить dashboard.
 ```

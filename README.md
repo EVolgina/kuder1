@@ -146,17 +146,17 @@ workbook   Ready    <none>   22h   v1.28.6
 devops@WORKBOOK:/mnt/c/kube$ microk8s kubectl get svc/kubernetes-dashboard -n kube-system
 NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
 kubernetes-dashboard   ClusterIP   10.152.183.89   <none>        443/TCP   46h
-vagrant@vagrant:~/kube$ microk8s kubectl get pods -n kube-system
-NAME                                         READY   STATUS    RESTARTS   AGE
-dashboard-metrics-scraper-5657497c4c-6748c   1/1     Running   0          4h6m
-kubernetes-dashboard-54b48fbf9-b4wq6         1/1     Running   0          4h6m
-calico-node-vjcwj                            1/1     Running   0          4h17m
-coredns-864597b5fd-5flhg                     1/1     Running   0          4h17m
-calico-kube-controllers-77bd7c5b-kfndp       1/1     Running   0          4h17m
-metrics-server-848968bdcd-7n9jf              1/1     Running   0          4h7m
+devops@WORKBOOK:/mnt/c/kube$ microk8s kubectl get pods -n kube-system
+NAME                                         READY   STATUS    RESTARTS      AGE
+dashboard-metrics-scraper-5657497c4c-tz5tf   1/1     Running   3 (84m ago)   47h
+kubernetes-dashboard-54b48fbf9-864kd         1/1     Running   4 (32m ago)   47h
+calico-node-mptk6                            1/1     Running   3 (84m ago)   47h
+calico-kube-controllers-77bd7c5b-jccnf       1/1     Running   3 (84m ago)   47h
+coredns-864597b5fd-gr5v4                     1/1     Running   3 (84m ago)   47h
+metrics-server-848968bdcd-9crl8              1/1     Running   3 (84m ago)   47h
 ```
-- скопировала config на локальный пк, не могу разобраться с IP(моя виртуальная машина поднята через vagrant ubuntu 20.04 [config](https://github.com/EVolgina/kuder1/blob/main/config)
-- откоректировала файл [csr.conf.template](https://github.com/EVolgina/kuder1/blob/main/csr.conf.template)
+![11](https://github.com/EVolgina/kuder1/blob/main/ноут.PNG)
+![12]()
 ```
 devops@WORKBOOK:/mnt/c/kube$ sudo microk8s refresh-certs --cert front-proxy-client.crt
 Taking a backup of the current certificates under /var/snap/microk8s/6429/certs-backup/
@@ -186,17 +186,4 @@ kube-system   kube-dns                    ClusterIP   10.152.183.10    <none>   
 kube-system   metrics-server              ClusterIP   10.152.183.59    <none>        443/TCP                  4h55m
 kube-system   kubernetes-dashboard        ClusterIP   10.152.183.110   <none>        443/TCP                  4h55m
 kube-system   dashboard-metrics-scraper   ClusterIP   10.152.183.252   <none>        8000/TCP                 4h55m
-```
-```
-на 2 пк
-sudo apt install -y socat conntrack
-sudo snap install kubelet --classic
-kubelet 1.28.6 from Canonical✓ installed
-sudo systemctl enable kubelet.service
-sudo apt install -y containerd
-/proc/sys/net/bridge/bridge-nf-call-iptables установлен в 1 и /proc/sys/net/ipv4/ip_forward также установлен в 1.
-
-создала токен присоединения к кластеру
-devops@WORKBOOK:/mnt/c/kube$ kubeadm token create --print-join-command
-kubeadm join 158.160.59.40:16443 --token 7rleec.mlyhro6geuee4a59 --discovery-token-ca-cert-hash sha256:a2c99cdb751a1127ec311f054c6f7d69a1abd5c703819302874d8868848c5352
 ```

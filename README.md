@@ -143,9 +143,9 @@ workbook   Ready    <none>   22h   v1.28.6
 ```
 - Проверила службу дашборда Kubernetes:
 ```
-vagrant@vagrant:~/kube$ microk8s kubectl get svc/kubernetes-dashboard -n kube-system
-NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
-kubernetes-dashboard   ClusterIP   10.152.183.110   <none>        443/TCP   4h3m
+devops@WORKBOOK:/mnt/c/kube$ microk8s kubectl get svc/kubernetes-dashboard -n kube-system
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+kubernetes-dashboard   ClusterIP   10.152.183.89   <none>        443/TCP   46h
 vagrant@vagrant:~/kube$ microk8s kubectl get pods -n kube-system
 NAME                                         READY   STATUS    RESTARTS   AGE
 dashboard-metrics-scraper-5657497c4c-6748c   1/1     Running   0          4h6m
@@ -158,22 +158,19 @@ metrics-server-848968bdcd-7n9jf              1/1     Running   0          4h7m
 - скопировала config на локальный пк, не могу разобраться с IP(моя виртуальная машина поднята через vagrant ubuntu 20.04 [config](https://github.com/EVolgina/kuder1/blob/main/config)
 - откоректировала файл [csr.conf.template](https://github.com/EVolgina/kuder1/blob/main/csr.conf.template)
 ```
-vagrant@vagrant:~/kube$ sudo microk8s refresh-certs --cert front-proxy-client.crt ---обновила сертификаты
-Taking a backup of the current certificates under /var/snap/microk8s/6089/certs-backup/
+devops@WORKBOOK:/mnt/c/kube$ sudo microk8s refresh-certs --cert front-proxy-client.crt
+Taking a backup of the current certificates under /var/snap/microk8s/6429/certs-backup/
 Creating new certificates
 Signature ok
 subject=CN = front-proxy-client
 Getting CA Private Key
 Restarting service kubelite.
 
-vagrant@vagrant:~/kube$ microk8s kubectl cluster-info
+devops@WORKBOOK:/mnt/c/kube$ microk8s kubectl cluster-info
 Kubernetes control plane is running at https://127.0.0.1:16443
 CoreDNS is running at https://127.0.0.1:16443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
-vagrant@vagrant:~/kube$ microk8s kubectl get nodes
-NAME      STATUS   ROLES    AGE     VERSION
-vagrant   Ready    <none>   4h57m   v1.28.3
 vagrant@vagrant:~/kube$ microk8s kubectl get pods --all-namespaces
 NAMESPACE     NAME                                         READY   STATUS    RESTARTS      AGE
 kube-system   kubernetes-dashboard-54b48fbf9-b4wq6         1/1     Running   1 (14m ago)   4h55m
@@ -201,5 +198,5 @@ sudo apt install -y containerd
 
 создала токен присоединения к кластеру
 devops@WORKBOOK:/mnt/c/kube$ kubeadm token create --print-join-command
-kubeadm join 172.23.49.32:16443 --token 7rleec.mlyhro6geuee4a59 --discovery-token-ca-cert-hash sha256:a2c99cdb751a1127ec311f054c6f7d69a1abd5c703819302874d8868848c5352
+kubeadm join 158.160.59.40:16443 --token 7rleec.mlyhro6geuee4a59 --discovery-token-ca-cert-hash sha256:a2c99cdb751a1127ec311f054c6f7d69a1abd5c703819302874d8868848c5352
 ```
